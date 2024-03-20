@@ -18,6 +18,9 @@ export const Groups = () => {
   const handleNewGroup = () => {
       navigation.navigate('new');
   }
+  const handleOpenGroup = (group: string) => {
+      navigation.navigate('players', {group})
+  }
 
   const fetchGroups = async () => {
     try {
@@ -45,7 +48,10 @@ export const Groups = () => {
           data={groups}
           keyExtractor={item => item}
           renderItem={({ item }) => (
-            <GroupCard title={item} />
+            <GroupCard 
+              title={item} 
+              onPress={() => handleOpenGroup(item)}
+            />
           ) }
           contentContainerStyle={groups.length === 0 && { flex:1 } }
           ListEmptyComponent={() => (

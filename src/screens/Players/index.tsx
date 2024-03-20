@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 
@@ -12,16 +12,45 @@ import { Filter } from '@components/Filter';
 import { PlayerCard } from '@components/PlayerCard';
 import { ListEmpty } from '@components/ListEmpty';
 import { Button } from '@components/Button';
+import { AppError } from '@utils/AppError';
+import { playerAddByGroup } from '@storage/player/playerAddByGroup';
+import { playersGetByGroup } from '@storage/player/playersGetByGroup';
 
 type RouteParams = {
   group: string;
 }
 
 export const Players = () => {
+  const [ newPlayerName, setNewPlayerName ] = useState('');
   const  [ team,  setTeam ] = useState("Time A");
   const [ players, setPlayers ] = useState([]);
   const routes = useRoute();
   const { group } = routes.params  as RouteParams;
+
+  const handleAddPlayers = async () => {
+    if(newPlayerName.trim().length === 0){
+      return Alert.alert('Nova Pessoa', 'Informe o nome da pessoa para adicionar.');
+    }
+
+    const newPlayer = {
+      name: newPlayerName,
+      team
+    }
+
+    try {
+      await playerAddByGroup(newPlayer, group);
+      const players =  await playersGetByGroup(group);
+      console.log(players);
+      
+    } catch (error) {
+      if(error instanceof AppError){
+        Alert.alert('Nova Pessoa', error.message);
+      }else {
+        Alert.alert('Nova Pessoa', 'Não foi possível adicionar.');
+      }
+    }
+
+  }
   return (
     <Container>
       <Header showBackButton/>
@@ -33,10 +62,14 @@ export const Players = () => {
 
       <Form>
         <Input
+        onChangeText={setNewPlayerName}
           placeholder='Nome da pessoa'
           autoCorrect={false}
         />
-        <ButtonIcon icon='add'/>
+        <ButtonIcon 
+          icon='add'
+          onPress={handleAddPlayers}
+        />
       </Form>
 
       <HeaderList>
