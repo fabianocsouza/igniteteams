@@ -7,16 +7,15 @@ module.exports = function (api) {
       [
         'module-resolver',
         {
-          root: ['./src'
-          ],
+          root: ['./src'],
           alias: {
-            '@assets': './src/assets',
-            '@components': './src/components',
-            '@routes': './src/routes',
-            '@screens': './src/screens',
-            '@storage': './src/storage',
-            '@theme': './src/theme',
-            '@utils': './src/utils',
+            '@assets': 'assets',
+            '@components': 'components',
+            '@routes': 'routes',
+            '@screens': 'screens',
+            '@storage': 'storage',
+            '@theme': 'theme',
+            '@utils': 'utils',
           }
         }
       ]
