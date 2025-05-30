@@ -10,9 +10,6 @@
       "@components/*": [
         "components/*"
       ],
-      "@routes/*": [
-        ".routes/*"
-      ],
       "@screens/*": [
         "screens/*"
       ],
