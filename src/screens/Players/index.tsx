@@ -26,15 +26,15 @@ type RouteParams = {
 };
 
 export function Players() {
-  const [newPlayerName, setNewPlayerName] = useState("");
   const [team, setTeam] = useState("Time A");
+  const [newPlayerName, setNewPlayerName] = useState("");
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
 
-  const navigation = useNavigation();
-  const { params } = useRoute();
-  const { group } = params as RouteParams;
-
   const newPlayerNameInputRef = useRef<TextInput>(null);
+
+  const { params } = useRoute();
+  const navigation = useNavigation();
+  const { group } = params as RouteParams;
 
   async function handleAddPlayer() {
     if (newPlayerName.trim().length === 0) {
@@ -64,7 +64,6 @@ export function Players() {
   async function fetchPlayersByTeam() {
     try {
       const playersByTeam = await playersGetByGroupAndTeam(group, team);
-
       setPlayers(playersByTeam);
     } catch (error) {
       console.log(error);
@@ -91,12 +90,12 @@ export function Players() {
       navigation.navigate("groups");
     } catch (error) {
       console.log(error);
-      Alert.alert("Remover grupo", "Não foi possível remover o grupo.");
+      Alert.alert("Remover grupo", "Não foi possível remover o turma.");
     }
   }
 
   function handleGroupRemove() {
-    Alert.alert("Remove", "Deseja remover o grupo?", [
+    Alert.alert("Remove", "Deseja remover o turma?", [
       { text: "Não", style: "cancel" },
       { text: "Sim", onPress: () => groupRemove() },
     ]);
