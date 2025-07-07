@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
 import { FlatList } from "react-native";
+import { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { Container } from "./styles";
 
@@ -8,7 +9,7 @@ import { Button } from "@components/Button";
 import { Highlight } from "@components/Highlight";
 import { GroupCard } from "@components/GroupCard";
 import { ListEmpty } from "@components/ListEmpty";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+
 import { groupsGetAll } from "@storage/group/groupsGetAll";
 
 export function Groups() {
